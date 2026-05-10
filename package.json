@@ -36,5 +36,8 @@
     "dotenv": "^16.4.5",
     "js-yaml": "^4.1.1",
     "playwright": "^1.58.1"
+  },
+  "devDependencies": {
+    "docx": "^9.6.1"
   }
 }
