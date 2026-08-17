@@ -10,6 +10,7 @@ export interface Report {
   pdfPath: string | null
   sections: Record<string, string>
   rawContent: string
+  bodyContent: string
 }
 
 // Matches "Evaluation:" (EN) and "Evaluación:" / "Evaluacion:" (ES)
@@ -34,6 +35,9 @@ export function parseReport(number: string, content: string): Report {
     if (m) sections[m[1]] = part.replace(/^[A-G]\)[^\n]*\n/, '').trim()
   })
 
+  const firstSection = content.indexOf('\n## ')
+  const bodyContent = firstSection >= 0 ? content.slice(firstSection + 1) : content
+
   return {
     number,
     company: h?.[1]?.trim() ?? '',
@@ -46,5 +50,6 @@ export function parseReport(number: string, content: string): Report {
     pdfPath: meta(content, 'PDF') || null,
     sections,
     rawContent: content,
+    bodyContent,
   }
 }
